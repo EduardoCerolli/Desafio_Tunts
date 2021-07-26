@@ -9,15 +9,15 @@ worksheet = sh.sheet1                                                           
 
 
 
-def Average (Student):                              # returns the average of the grades 
+def Average (Student):                                  # returns the average of the grades 
     p1 = Student ["P1"]
     p2 = Student ["P2"]
     p3 = Student ["P3"]
 
-    average = math.ceil ((p1 + p2 + p3) / 3)        # "math.ceil" rounds the result up
+    average = math.ceil ((p1 + p2 + p3) / 3)            # "math.ceil" rounds the result up
     return average
 
-def Situation (average, absences):                  # returns the situation of the students
+def Situation (average, absences):                      # returns the situation of the students
     if absences > 15:
         return "Reprovado por Falta"
 
@@ -29,9 +29,25 @@ def Situation (average, absences):                  # returns the situation of t
 
     return "Reprovado por Nota"
 
-def NAF (average):                                  # returns grade for final approval
+def NAF (average):                                      # returns grade for final approval
     naf = 100 - average
     return naf
+
+def Logs (Student, absences, average, situation, naf):  # prints the log lines
+    name = Student["Name"]
+    p1 = Student["P1"]
+    p2 = Student["P2"]
+    p3 = Student["P3"]
+    print ("(log)")
+    print ("Name:", name)
+    print ("P1 =", p1)
+    print ("P2 =", p2)
+    print ("P3 =", p3)
+    print ("Absences =", absences)
+    print ("Average =", average)
+    print ("Situation:", situation)
+    print ("NAF =", naf)
+    print ("\n")
 
 
 
@@ -65,7 +81,8 @@ while name != None:
 
     worksheet.update_cell (row, 7, situation)           # updates the cell with the situation
     worksheet.update_cell (row, 8, naf)                 # updates the cell with the grade for final approval
-    worksheet.update_cell (row, 9, average) 
+
+    Logs (Student, absences, average, situation, naf)   
 
     row = row + 1                                       # increment the row to calculate the next student
     name = worksheet.cell (row, 2).value
