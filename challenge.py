@@ -56,12 +56,17 @@ def Logs (Student, absences, average, situation, naf):  # prints the log lines
 Student = {}                                            # object where the data will be stored
 
 row = 4                                                 # row that starts the necessary data
-name = worksheet.cell (row, 2).value                    # get the student's name
+spreadsheet = worksheet.get_all_values()                # get the entire spreadsheet
+max_row = len (spreadsheet)                             # finds out how many lines there are
 
-while name != None:
-    p1 = int (worksheet.cell (row,4).value)             # get the test notes
-    p2 = int (worksheet.cell (row,5).value)
-    p3 = int (worksheet.cell (row,6).value)
+for x in range (3, max_row):
+    current_row = spreadsheet[x]
+
+    name = current_row[1]
+
+    p1 = int (current_row[3])                           # get the test notes
+    p2 = int (current_row[4])
+    p3 = int (current_row[5])
 
     Student ["Name"] = name                             # updates the student object with current data
     Student ["P1"] = p1
@@ -70,7 +75,7 @@ while name != None:
 
     average = Average (Student)
     
-    absences = int (worksheet.cell (row,3).value)       # get the number of absences
+    absences = int (current_row[2])                     # get the number of absences
 
     situation = Situation (average, absences)
 
@@ -85,7 +90,6 @@ while name != None:
     Logs (Student, absences, average, situation, naf)   
 
     row = row + 1                                       # increment the row to calculate the next student
-    name = worksheet.cell (row, 2).value
 
 
 print ("End")
