@@ -15,7 +15,7 @@ sudo pip install gspread
 
 Apos isso baixe esse repositorio e rode o seguinte comando dentro dele:
 ```
-    $ python3 challenge.py 
+python3 challenge.py 
 ```
 
 
