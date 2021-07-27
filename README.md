@@ -1,2 +1,17 @@
-# Desafio_Tunts
-Implementação em python do desafio realizado para vaga de estagio na empresa Tunts
+# Desafio para vaga de estagio para a empresa Tunts
+
+O desafio tinha como objetivo usar a API do google sheets para ler os dados de uma planilha e calcular as medias dos alunos e a sua situação.
+Fiz a implementação na linguagem python.
+
+
+# Passo a passo:
+
+rode os seguintes comandos no terminal:
+    $ sudo apt install python3
+    $ sudo apt install python3-pip
+    $ sudo pip install gspread
+
+apos isso baixe esse repositorio e rode o seguinte comando dentro dele:
+    $ python3 challenge.py 
+
+
