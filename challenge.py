@@ -17,79 +17,68 @@ def Average (Student):                                  # returns the average of
     average = math.ceil ((p1 + p2 + p3) / 3)            # "math.ceil" rounds the result up
     return average
 
-def Situation (average, absences):                      # returns the situation of the students
-    if absences > 15:
+def Situation (Student):                                # returns the situation of the students
+    if Student["Absences"] > 15:
         return "Reprovado por Falta"
 
-    if average >= 70:
+    if Student["Average"] >= 70:
         return "Aprovado"
 
-    if average >= 50:
+    if Student["Average"] >= 50:
         return "Exame Final"
 
     return "Reprovado por Nota"
 
-def NAF (average):                                      # returns grade for final approval
-    naf = 100 - average
-    return naf
+def NAF (Student):                                      # returns grade for final approval
+    naf = 100 - Student["Average"]
+    if naf <= 50:
+        return naf
 
-def Logs (Student, absences, average, situation, naf):  # prints the log lines
-    name = Student["Name"]
-    p1 = Student["P1"]
-    p2 = Student["P2"]
-    p3 = Student["P3"]
+    return 0
+
+def Logs (Student):                                     # prints the log lines
     print ("(log)")
-    print ("Name:", name)
-    print ("P1 =", p1)
-    print ("P2 =", p2)
-    print ("P3 =", p3)
-    print ("Absences =", absences)
-    print ("Average =", average)
-    print ("Situation:", situation)
-    print ("NAF =", naf)
+    print ("Name:", Student["Name"])
+    print ("P1 =", Student["P1"])
+    print ("P2 =", Student["P2"])
+    print ("P3 =", Student["P3"])
+    print ("Absences =", Student["Absences"])
+    print ("Average =", Student["Average"])
+    print ("Situation:", Student["Situation"])
+    print ("NAF =", Student["NAF"])
     print ("\n")
 
+def Update_spreadsheet (Student, row):
+    worksheet.update_cell (row+1, 7, Student["Situation"])           # updates the cell with the situation
+    worksheet.update_cell (row+1, 8, Student["NAF"])                 # updates the cell with the grade for final approval
 
 
 
 
-Student = {}                                            # object where the data will be stored
 
-row = 4                                                 # row that starts the necessary data
-spreadsheet = worksheet.get_all_values()                # get the entire spreadsheet
-max_row = len (spreadsheet)                             # finds out how many lines there are
+Student = {}                                                         # object where the data will be stored
 
-for x in range (3, max_row):
-    current_row = spreadsheet[x]
+spreadsheet = worksheet.get_all_values()                             # get the entire spreadsheet
+max_row = len (spreadsheet)                                          # finds out how many lines there are
 
-    name = current_row[1]
+for row in range (3, max_row):
+    row_data = spreadsheet[row]
 
-    p1 = int (current_row[3])                           # get the test notes
-    p2 = int (current_row[4])
-    p3 = int (current_row[5])
+    Student ["Name"] = row_data[1]                                   # updates the student object with current data
+    Student ["P1"] = int (row_data[3])
+    Student ["P2"] = int (row_data[4])
+    Student ["P3"] = int (row_data[5])
+    Student ["Average"] = Average (Student)
+    Student ["Absences"] = int (row_data[2])         
+    Student ["Situation"] = Situation (Student)
+    Student ["NAF"] = NAF (Student)
 
-    Student ["Name"] = name                             # updates the student object with current data
-    Student ["P1"] = p1
-    Student ["P2"] = p2
-    Student ["P3"] = p3
+    Update_spreadsheet (Student, row)
 
-    average = Average (Student)
-    
-    absences = int (current_row[2])                     # get the number of absences
+    Logs (Student)   
 
-    situation = Situation (average, absences)
+    row = row + 1                                                   # increment the row to calculate the next student
 
-    if situation == "Exame Final":
-        naf = NAF (average)
-    else:
-        naf = 0
-
-    worksheet.update_cell (row, 7, situation)           # updates the cell with the situation
-    worksheet.update_cell (row, 8, naf)                 # updates the cell with the grade for final approval
-
-    Logs (Student, absences, average, situation, naf)   
-
-    row = row + 1                                       # increment the row to calculate the next student
 
 
 print ("End")
