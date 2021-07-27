@@ -15,3 +15,6 @@ apos isso baixe esse repositorio e rode o seguinte comando dentro dele:
     $ python3 challenge.py 
 
 
+link da [planilha](https://docs.google.com/spreadsheets/d/1HLNVnAsUohEVQUas9SLWDQuE_N_mZWVg0JqBhbuqAsc/edit#gid=0)
+    
+
